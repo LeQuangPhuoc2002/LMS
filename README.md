@@ -1,1 +1,1 @@
-# (LMS)-Learning management system using Node.js & Express.js
+# (LMS) Learning management system using Node.js & Express.js
