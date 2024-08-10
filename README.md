@@ -1,1 +1,1 @@
-# LeQuangPhuoc2002-Learning-Management-System-Node.js
+# (LMS)-Learning management system using Node.js & Express.js
