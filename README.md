@@ -98,9 +98,3 @@ For support or inquiries, please contact:
 - **Email:** [quangphuoctacoo@gmail.com](mailto:quangphuoctacoo@gmail.com)
 - **Phone:** 0987214100
 - **Skype:** [live:.cid.92e470ef3ae60d04](skype:live:.cid.92e470ef3ae60d04)
-
----
-
-## 🙌 **Acknowledgments**
-
-Thank you for exploring our LMS project. Your feedback and suggestions are invaluable to us. We appreciate your support and look forward to your contributions!
