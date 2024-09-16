@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account Registration</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #0D6EFD;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .form-container {
+        width: 500px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-group label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+    }
+    .form-group select,
+    .form-group input {
+        width: calc(100% - 22px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        margin-top: 5px;
+        font-size: 16px;
+    }
+    .form-group input[type="submit"] {
+        background-color: #0D6EFD ;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: background-color 0.3s ease;
+        padding: 12px 0;
+        width: 100%;
+    }
+    .form-group input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+    h2 {
+        color: #333;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    #account-holder {
+    color: red;
+}
+
+</style>
+</head>
+<body>
+  
+<div class="form-container">
+    <h2>Bank Registration</h2>
+    <form id="bankForm" action="/registerteacher" method="get">
+        <div class="form-group">
+            <label for="bank">Bank:</label>
+            <select id="bank" name="bank">
+                <% banks.forEach((bank) => { %>
+                    <option value="<%= bank.shortName %>">
+                        ( <%= bank.bin %> ) <%= bank.shortName %>
+                    </option>
+                  <% }); %>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="account-number">Bank Number:</label>
+            <input type="text" id="account-number" name="bank_number" placeholder="Enter your bank number...">
+        </div>
+        <div class="form-group">
+            <label for="account-holder">Account Holder's Name:</label>
+            <label id="account-holder" name="account-holder" readonly>Your Name</label>
+            <input type="hidden" id="account-holder-input" name="bank_account_name" value="Your Name">
+        </div>        
+        
+        <div class="form-group">
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/bank/bank.js" defer></script>
+
+</body>
+</html>

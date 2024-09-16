@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Code</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Verify Code</h2>
+        <p>A verification code has been sent to your email.</p>
+        <% if (typeof conflictError != "undefined" && conflictError) { %>
+            <div class="error-message text-left mb-3"><%= conflictError %></div>
+            <br>
+        <% } %>
+        <form action="/emailcodee" method="get" id="verificationForm">
+            <div class="form-group">
+                <label for="code">Enter Verification Code:</label>
+                <input type="text" id="code" name="code" required>
+            </div>
+            <button type="submit">Verify</button>
+        </form>
+        <div id="message"></div>
+        <a href="/registeremail">Send again</a>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #0D6EFD;
+}
+
+.error-message {
+    color: red;
+}
+
+.container {
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 40px;
+    width: 400px;
+    text-align: center;
+}
+
+h2 {
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+p {
+    color: #666666;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 16px;
+    color: #666666;
+}
+
+input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #007bff;
+}
+
+button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 0;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#message {
+    margin-top: 20px;
+    color: #666666;
+    font-size: 14px;
+}
+
+p {
+    color: #0056b3; /* Đặt màu chữ thành đỏ */
+    margin-bottom: 20px;
+}
+
+</style>
