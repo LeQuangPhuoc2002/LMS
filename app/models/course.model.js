@@ -131,7 +131,6 @@ course.findAllTeacherUnDetaill = (email, result) => {
       result(err, null);
       return;
     }
-    // Trả về kết quả thông qua callback
     result(null, res);
   });
 };
@@ -155,37 +154,31 @@ course.addadstoteacherr = (pricing_id, email, result) => {
 };
 
 course.updateads = (pct_id, start_date, end_date, file, course_id, result) => {
-  // Phân tách ngày tháng từ chuỗi start_date
   const startDateParts = start_date.split("/");
   const startDay = startDateParts[0];
   const startMonth = startDateParts[1];
   const startYear = startDateParts[2];
 
-  // Tạo chuỗi ngày tháng mới cho start_date theo định dạng "YYYY-MM-DD"
   const formattedStartDate = `${startYear}-${startMonth.padStart(
     2,
     "0"
   )}-${startDay.padStart(2, "0")}`;
 
-  // Phân tách ngày tháng từ chuỗi end_date
   const endDateParts = end_date.split("/");
   const endDay = endDateParts[0];
   const endMonth = endDateParts[1];
   const endYear = endDateParts[2];
 
-  // Tạo chuỗi ngày tháng mới cho end_date theo định dạng "YYYY-MM-DD"
   const formattedEndDate = `${endYear}-${endMonth.padStart(
     2,
     "0"
   )}-${endDay.padStart(2, "0")}`;
 
-  // Lệnh SQL UPDATE
   let query = `
     UPDATE pricing_teacher
     SET start_date = ?, end_date = ?, banner_url = ?, course_id = ?
     WHERE pricing_teacher_id = ?`;
 
-  // Thực thi lệnh SQL
   sql.query(
     query,
     [formattedStartDate, formattedEndDate, file, course_id, pct_id],
@@ -197,7 +190,6 @@ course.updateads = (pct_id, start_date, end_date, file, course_id, result) => {
       }
 
       if (res.affectedRows == 0) {
-        // Nếu không tìm thấy bản ghi để cập nhật
         result({ kind: "not_found" }, null);
         return;
       }
@@ -331,13 +323,11 @@ course.getallquestion = (quiz_id, course_id, result) => {
 };
 
 course.playlist_buy = (courseId, user_email, result) => {
-  // Truy vấn để lấy student_id từ user_email
   let getStudentIdQuery = `
     SELECT student_id
     FROM student
     WHERE email = '${user_email}'`;
 
-  // Thực hiện truy vấn để lấy student_id
   sql.query(getStudentIdQuery, (err, studentRes) => {
     if (err) {
       console.log("error: ", err);
@@ -346,15 +336,12 @@ course.playlist_buy = (courseId, user_email, result) => {
     }
 
     if (studentRes.length === 0) {
-      // Không tìm thấy sinh viên với email đã cho
       result("Student not found with email: " + user_email, null);
       return;
     }
 
-    // Lấy student_id từ kết quả truy vấn
     const studentId = studentRes[0].student_id;
 
-    // Truy vấn để kiểm tra sự tồn tại của bản ghi trong student_course
     let query = `
         SELECT EXISTS (
             SELECT 1
@@ -362,7 +349,6 @@ course.playlist_buy = (courseId, user_email, result) => {
             WHERE course_id = ${courseId} AND student_id = ${studentId}
         ) AS exists_student_course`;
 
-    // Thực hiện truy vấn kiểm tra sự tồn tại của bản ghi
     sql.query(query, (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -380,7 +366,6 @@ course.playlist_buy = (courseId, user_email, result) => {
 let StudentIdd;
 
 course.addcouresetouserr = (course_name, user_name, result) => {
-  // Bước 1: Lấy student_id từ bảng student dựa trên user_name
   sql.query(
     "SELECT student_id FROM student WHERE name = ?",
     [user_name],
@@ -391,7 +376,6 @@ course.addcouresetouserr = (course_name, user_name, result) => {
       }
 
       if (studentRes.length === 0) {
-        // Trường hợp không tìm thấy student_id
         result({ message: "Student not found" }, null);
         return;
       }
@@ -400,7 +384,6 @@ course.addcouresetouserr = (course_name, user_name, result) => {
         StudentIdd = studentRes[0].student_id;
       }
 
-      // Bước 2: Lấy course_id từ bảng course dựa trên course_name
       sql.query(
         "SELECT course_id FROM course WHERE course_name = ?",
         [course_name],
@@ -411,14 +394,12 @@ course.addcouresetouserr = (course_name, user_name, result) => {
           }
 
           if (courseRes.length === 0) {
-            // Trường hợp không tìm thấy course_id
             result({ message: "Course not found" }, null);
             return;
           }
 
           const course_id = courseRes[0].course_id;
 
-          // Bước 3: Thêm student_id, course_id và purchase_date vào bảng student_course
           sql.query(
             "INSERT INTO student_course (student_id, course_id, purchase_date) VALUES (?, ?, curdate())",
             [StudentIdd, course_id],
@@ -464,7 +445,7 @@ course.searchcourse = (course_name, result) => {
     FROM course c
     LEFT JOIN course_video cv ON c.course_id = cv.course_id
     LEFT JOIN teacher t ON c.teacher_id = t.teacher_id
-    WHERE c.course_name LIKE '%${course_name}%'`; // Thêm điều kiện tìm kiếm theo tên khóa học
+    WHERE c.course_name LIKE '%${course_name}%'`; 
 
   query += ` GROUP BY c.course_id`;
 
@@ -690,7 +671,6 @@ course.getcourserbyidd = (i, result) => {
 let studentId;
 
 course.getcourserbyid = (id, email, result) => {
-  // Bước 1: Chọn student_id từ bảng student dựa trên email
   let studentQuery = `SELECT student_id FROM student WHERE email = '${email}'`;
 
   sql.query(studentQuery, (err, studentRes) => {
@@ -700,12 +680,10 @@ course.getcourserbyid = (id, email, result) => {
       return;
     }
 
-    // Lấy student_id từ kết quả truy vấn
     if (studentRes.length > 0 && studentRes[0].student_id !== undefined) {
       studentId = studentRes[0].student_id;
     }
 
-    // Bước 2: Chọn toàn bộ course_id từ bảng student_course dựa trên student_id
     let courseQuery = `SELECT course_id FROM student_course WHERE student_id = '${studentId}'`;
 
     sql.query(courseQuery, (err, courseRes) => {
@@ -715,10 +693,8 @@ course.getcourserbyid = (id, email, result) => {
         return;
       }
 
-      // Lấy danh sách các course_id từ kết quả truy vấn
       const courseIds = courseRes.map((course) => course.course_id);
 
-      // Bước 3: Thêm cột status_student và thiết lập giá trị
       let query = `
                 SELECT c.*, COUNT(cv.video_id) AS video_count, t.*, 
                 CASE WHEN c.course_id IN (${courseIds.join(
@@ -734,7 +710,6 @@ course.getcourserbyid = (id, email, result) => {
 
       query += ` GROUP BY c.course_id`;
 
-      // Thực hiện truy vấn cuối cùng
       sql.query(query, (err, res) => {
         if (err) {
           console.log("Error: ", err);
