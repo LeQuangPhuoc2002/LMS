@@ -13,7 +13,6 @@ exports.findVideoDetail = (req, res) => {
 exports.findQuizQuestionList = (req, res) => {
   const quiz_id = req.query.quiz_id;
 
-  // Sử dụng Promise.all để gửi yêu cầu lấy tất cả câu hỏi và tùy chọn cùng một lúc
   Promise.all([
     new Promise((resolve, reject) => {
       Todo.findQuizQuestion(quiz_id, (errQuestion, questionData) => {
@@ -35,11 +34,9 @@ exports.findQuizQuestionList = (req, res) => {
     }),
   ])
     .then(([questionData, optionData]) => {
-      // Gửi dữ liệu đến trang quiz khi cả hai yêu cầu đều thành công
       res.render("course-question-list", { todo: questionData, tododes: optionData });
     })
     .catch((err) => {
-      // Xử lý lỗi nếu có bất kỳ lỗi nào xảy ra
       console.error(err);
       res.redirect("/500");
     });
@@ -48,7 +45,6 @@ exports.findQuizQuestionList = (req, res) => {
 exports.findCouseQuizList = (req, res) => {
   const course_id = req.query.course_id;
 
-  // Sử dụng Promise.all để gửi yêu cầu lấy tất cả câu hỏi và tùy chọn cùng một lúc
   Promise.all([
     new Promise((resolve, reject) => {
       Todo.findCourseQuizList(course_id, (errQuestion, questionData) => {
@@ -70,11 +66,9 @@ exports.findCouseQuizList = (req, res) => {
     }),
   ])
     .then(([questionData, optionData]) => {
-      // Gửi dữ liệu đến trang quiz khi cả hai yêu cầu đều thành công
       res.render("course-quiz-list", { todo: questionData, tododes: optionData });
     })
     .catch((err) => {
-      // Xử lý lỗi nếu có bất kỳ lỗi nào xảy ra
       console.error(err);
       res.redirect("/500");
     });
@@ -85,7 +79,6 @@ exports.findCouseQuizList = (req, res) => {
 exports.findCouseVideoList = (req, res) => {
   const course_id = req.query.course_id;
 
-  // Sử dụng Promise.all để gửi yêu cầu lấy tất cả câu hỏi và tùy chọn cùng một lúc
   Promise.all([
     new Promise((resolve, reject) => {
       Todo.findCouseVideoList(course_id, (errQuestion, questionData) => {
@@ -107,11 +100,9 @@ exports.findCouseVideoList = (req, res) => {
     }),
   ])
     .then(([questionData, optionData]) => {
-      // Gửi dữ liệu đến trang quiz khi cả hai yêu cầu đều thành công
       res.render("course-video-list", { todo: questionData, tododes: optionData });
     })
     .catch((err) => {
-      // Xử lý lỗi nếu có bất kỳ lỗi nào xảy ra
       console.error(err);
       res.redirect("/500");
     });
@@ -151,25 +142,19 @@ exports.findAllpricee = (req, res) => {
       res.redirect(`http://localhost:3010/ads?email=${email}`);
     }
   });
-
- 
 }
-
 
 exports.findAllprice = (req, res) => {
   const { email } = req.query;
 
-  // Kiểm tra tính hợp lệ của dữ liệu đầu vào
   if (!email) {
     console.error("Missing required parameter: email.");
     res.redirect("/500");
     return;
   }
 
-  // Khởi tạo mảng promises
   const promises = [];
 
-  // Thêm các promise vào mảng
   promises.push(
     new Promise((resolve, reject) => {
       Todo.getAllprice((errPrice, priceData) => {
@@ -200,87 +185,15 @@ exports.findAllprice = (req, res) => {
     })
   );
 
-  // Chạy tất cả các promise và render trang "ads" với dữ liệu đã nhận được
   Promise.all(promises)
     .then(([priceData, courseData, adsData]) => {
       res.render("ads", { todo: priceData, course: courseData, ads: adsData });
     })
     .catch((err) => {
-      // Xử lý lỗi
       console.error("Error:", err);
       res.redirect("/500");
     });
 };
-
-
-// exports.findAllprice = (req, res) => {
-//   const email = req.query.email;
-//   const pcd_id = req.query.pcd_id;
-//   const start_date = req.query.start_date;
-//   const end_date = req.query.end_date;
-//   const file = req.query.file;
-//   const course_id = req.query.course_id;
-
-//   const promises = [];
-
-//   if (start_date !== null && start_date !== undefined){
-
-//     Todo.updateads(pcd_id, start_date, end_date, file, course_id, (err) => {
-//       if (err) {
-//         console.error("Error:", err);
-//         res.redirect("/500");
-//         return;
-//       }
-//       // Sau khi addnotevideo được thực hiện, tiếp tục render trang
-//       renderPage();
-//     });
-//   }
-//   // Sử dụng Promise.all để gửi yêu cầu lấy tất cả mức giá và quảng cáo cùng một lúc
-//   // Hàm để render trang watch-video với dữ liệu đã nhận được
-//   function renderPage() {
-//     // Thêm các promise còn lại vào mảng
-//     promises.push(
-//     new Promise((resolve, reject) => {
-//       Todo.getAllprice((errPrice, priceData) => {
-//         if (errPrice) {
-//           reject(errPrice);
-//         } else {
-//           resolve(priceData);
-//         }
-//       });
-//     }),
-//     new Promise((resolve, reject) => {
-//       // Truyền tham số email vào hàm getAllcourseteacher
-//       Todo.getAllcourseteacher(email, (errCourse, courseData) => {
-//         if (errCourse) {
-//           reject(errCourse);
-//         } else {
-//           resolve(courseData);
-//         }
-//       });
-//     }),
-//     new Promise((resolve, reject) => {
-//       Todo.getAllads(email, (errAds, adsData) => {
-//         if (errAds) {
-//           reject(errAds);
-//         } else {
-//           resolve(adsData);
-//         }
-//       });
-//     }),
-//   ])}
-//   Promise.all(promises)
-//     .then(([priceData, courseData, adsData]) => {
-//       // Gửi dữ liệu đến trang ads khi cả hai yêu cầu đều thành công
-//       res.render("ads", { todo: priceData, course: courseData, ads: adsData });
-//     })
-//     .catch((err) => {
-//       // Xử lý lỗi nếu có bất kỳ lỗi nào xảy ra
-//       console.error(err);
-//       res.redirect("/500");
-//     });
-// };
-
 
 exports.findAllCourse = (req, res) => {
   res.locals.deleted = req.query.deleted;
@@ -297,7 +210,6 @@ exports.allquesstion = (req, res) => {
   const course_id = req.query.course_id;
 
   
-  // Sử dụng Promise.all để gửi yêu cầu lấy tất cả câu hỏi và tùy chọn cùng một lúc
   Promise.all([
     new Promise((resolve, reject) => {
       Todo.getallquestion(quiz_id, course_id, (errQuestion, questionData) => {
@@ -319,11 +231,9 @@ exports.allquesstion = (req, res) => {
     }),
   ])
     .then(([questionData, optionData]) => {
-      // Gửi dữ liệu đến trang quiz khi cả hai yêu cầu đều thành công
       res.render("question", { question: questionData, option: optionData });
     })
     .catch((err) => {
-      // Xử lý lỗi nếu có bất kỳ lỗi nào xảy ra
       console.error(err);
       res.redirect("/500");
     });
@@ -342,7 +252,6 @@ exports.findAllplaylistbuy = (req, res) => {
   const course_id = req.query.course_id;
   const user_email = req.query.user_email;
 
-  // Sử dụng Promise.all để thực hiện các cuộc gọi đồng thời
   Promise.all([
     new Promise((resolve, reject) => {
       Todo.getcourserbyidd(course_id, (err, data) => {
@@ -373,7 +282,6 @@ exports.findAllplaylistbuy = (req, res) => {
     }),
   ])
     .then(([courses, videos, comments]) => {
-      // Kiểm tra xem có thông tin về việc mua khóa học hay không
       Todo.playlist_buy(course_id, user_email, (err, exists_student_course) => {
         if (err) {
           console.error("Error: ", err);
@@ -419,8 +327,8 @@ exports.findallcourseindex = (req, res) => {
 
 exports.findallcourse = (req, res) => {
   const course_name = req.query.search_box;
-  if (course_name != null && course_name.trim() !== "") { // Kiểm tra xem course_name có được cung cấp không
-    Todo.searchcourse(course_name, (err, data) => { // Nếu có, thực hiện tìm kiếm
+  if (course_name != null && course_name.trim() !== "") { 
+    Todo.searchcourse(course_name, (err, data) => { 
       if (err) res.redirect("/500");
       else res.render("courses", { todo: data });
     });
@@ -445,11 +353,8 @@ exports.findvideo = (req, res) => {
     status = 0;
   }
 
-  // Mảng các promise sẽ được chạy bất kỳ trong bất kỳ trường hợp nào
   const promises = [];
-  // Nếu status là 1 hoặc note !== null hoặc note !== undefined, thực hiện Todo.alreadywatchvideo hoặc Todo.addnotevideo trước khi render trang
   if (status == 1 || (note !== null && note !== undefined)) {
-    // Nếu note !== null hoặc note !== undefined, thực hiện Todo.addnotevideo trước khi render trang
     if (note !== null && note !== undefined) {
       Todo.addnotevideo(email, video_id, note, (err) => {
         if (err) {
@@ -457,11 +362,9 @@ exports.findvideo = (req, res) => {
           res.redirect("/500");
           return;
         }
-        // Sau khi addnotevideo được thực hiện, tiếp tục render trang
         renderPage();
       });
     }
-    // Nếu status là 1, thực hiện Todo.alreadywatchvideo trước khi render trang
     else if (status == 1) {
       Todo.alreadywatchvideo(email, video_id, (err) => {
         if (err) {
@@ -469,23 +372,18 @@ exports.findvideo = (req, res) => {
           res.redirect("/500");
           return;
         }
-        // Nếu không có lỗi, tiếp tục render trang
         renderPage();
       });
     } 
     
     else {
-      // Nếu không cần thực hiện Todo.alreadywatchvideo, render trang ngay lập tức
       renderPage();
     }
   } else {
-    // Nếu không cần thực hiện cả hai, render trang ngay lập tức
     renderPage();
   }
 
-  // Hàm để render trang watch-video với dữ liệu đã nhận được
   function renderPage() {
-    // Thêm các promise còn lại vào mảng
     promises.push(
       new Promise((resolve, reject) => {
         Todo.getvideobyvideoid(video_id, (err, videoData) => {
@@ -525,7 +423,6 @@ exports.findvideo = (req, res) => {
       })
     );
 
-    // Chạy tất cả các promise và render trang watch-video với dữ liệu đã nhận được
     Promise.all(promises)
       .then(([videoData, courseData, videoWatchData, videoNoteData]) => {
         res.render("watch-video", {
@@ -547,7 +444,6 @@ exports.findAll = (req, res) => {
   const course_id = req.query.course_id;
   const email = req.query.email;
 
-  // Sử dụng Promise.all để thực hiện các cuộc gọi đồng thời
   Promise.all([
     new Promise((resolve, reject) => {
       Todo.getcourserbyid(course_id, email, (err, data) => {
