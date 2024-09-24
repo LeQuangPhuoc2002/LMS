@@ -29,7 +29,6 @@ Todo.findById = (id, result) => {
             result(null, res[0]);
             return;
         }
-        // not found todo with the id
         result({ kind: "not_found" }, null);
     });
 };
@@ -70,7 +69,6 @@ Todo.updateById = (id, todo, result) => {
                 return;
             }
             if (res.affectedRows == 0) {
-                // not found todo with the id
                 result({ kind: "not_found" }, null);
                 return;
             }
@@ -87,7 +85,6 @@ Todo.remove = (id, result) => {
             return;
         }
         if (res.affectedRows == 0) {
-            // not found todo with the id
             result({ kind: "not_found" }, null);
             return;
         }
