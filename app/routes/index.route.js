@@ -2,7 +2,6 @@ const indexadminRouter = require("express").Router();
 
 module.exports = (app) => {
   var router = require("express").Router();
-  // Route to retrieve all todos
   const moment = require("moment");
 
   app.use((req, res, next) => {
@@ -39,8 +38,7 @@ module.exports = (app) => {
   app.get("/course-edit", (req, res, next) => {
     res.render("course-edit");
   });
-  
- 
+   
   app.get("/index-1", (req, res, next) => {
     res.render("index-1");
   });
@@ -56,8 +54,6 @@ module.exports = (app) => {
   app.get("/question-detail", (req, res, next) => {
     res.render("question-detail");
   });
-
-
 
   app.get("/modals", (req, res, next) => {
     res.render("modals");
@@ -79,8 +75,6 @@ module.exports = (app) => {
     res.render("youhavetologin");
   });
 
-
-
   app.get("/forgot-password", (req, res, next) => {
     res.render("forgot-password");
   });
@@ -88,8 +82,6 @@ module.exports = (app) => {
   app.get("/tables", (req, res, next) => {
     res.render("tables");
   });
-
-
 
   app.get("/blank", (req, res, next) => {
     res.render("blank");
@@ -123,25 +115,14 @@ module.exports = (app) => {
     return sorted;
   }
 
-  // Import 3 thư viện cần thiết
-  const nodemailer = require("nodemailer");
-  const { OAuth2Client } = require("google-auth-library");
-
-
   app.get("/send-email-ordersuccess", async (req, res) => {
     try {
       const user_name = req.query.user_name;
       const email = req.query.email;
       const month = req.query.month;
       const pricing_id = req.query.pricing_id;
-      
       const vnp_Amount = req.query.vnp_Amount;
-
-      // Ví dụ về cách truy cập dữ liệu từ query string
       const vnp_BankCode = req.query.vnp_BankCode;
-
-      // Tạo dữ liệu khác tương tự với các trường bạn muốn truy cập từ query string
-
       const currentDate = new Date();
       const date_start = `${currentDate.getDate()}/${
         currentDate.getMonth() + 1
@@ -151,15 +132,15 @@ module.exports = (app) => {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "20t1020652@husc.edu.vn", // Địa chỉ email của bạn
-          pass: "binphuoctacoo", // Mật khẩu email của bạn
+          user: "testsendmail123@gmail.com",
+          pass: "123123",
         },
       });
 
       const mailOptions = {
-        from: "20t1020652@husc.edu.vn", // Địa chỉ email của bạn
-        to: email, // Địa chỉ email người nhận
-        subject: "SUCCESSFUL PAYMENT FOR ADVERTISING PACKAGE", // Tiêu đề email
+        from: "testsendmail123@gmail.com", 
+        to: email, 
+        subject: "SUCCESSFUL PAYMENT FOR ADVERTISING PACKAGE",
         html: `
         <p>Dear ${user_name},</p>
         <p>We are delighted to inform you that your payment for the advertising package has been successfully confirmed.</p>
@@ -189,7 +170,6 @@ module.exports = (app) => {
       res.redirect(`/ordersuccess?pricing_id=${encodeURIComponent(pricing_id)}&email=${encodeURIComponent(email)}`);
 
     } catch (error) {
-      // Có lỗi thì các bạn log ở đây cũng như gửi message lỗi về phía client
       console.log(error);
       res.status(500).json({ errors: error.message });
     }
@@ -215,13 +195,11 @@ module.exports = (app) => {
     let month = req.body.month;
     let pricing_id = req.body.pricing_id;
     
-    let tmnCode = "8OL26WLV";
-    let secretKey = "ZSACGHPGEITEKSERRKAZGKXMEXVMISCC";
+    let tmnCode = "123";
+    let secretKey = "123";
     let vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    // URL cơ bản
-    let returnUrlBase = "http://localhost:3010/send-email-ordersuccess";
+    let returnUrlBase = "http://localhost:3000/send-email-ordersuccess";
 
-    // Tạo URL hoàn chỉnh bằng cách thêm giá trị của coursename vào returnUrl
     let returnUrl = `${returnUrlBase}?user_name=${encodeURIComponent(
       user_name
     )}&amount=${encodeURIComponent(amount)}&email=${encodeURIComponent(email)}&month=${encodeURIComponent(month)}&pricing_id=${encodeURIComponent(pricing_id)}`;
@@ -266,27 +244,20 @@ module.exports = (app) => {
 
   router.get("/vnpay_return", function (req, res, next) {
     let vnp_Params = req.query;
-
     let secureHash = vnp_Params["vnp_SecureHash"];
-
     delete vnp_Params["vnp_SecureHash"];
     delete vnp_Params["vnp_SecureHashType"];
-
     vnp_Params = sortObject(vnp_Params);
-
     let config = require("config");
     let tmnCode = config.get("vnp_TmnCode");
     let secretKey = config.get("vnp_HashSecret");
-
     let querystring = require("qs");
     let signData = querystring.stringify(vnp_Params, { encode: false });
     let crypto = require("crypto");
     let hmac = crypto.createHmac("sha512", secretKey);
     let signed = hmac.update(new Buffer(signData, "utf-8")).digest("hex");
-
+    
     if (secureHash === signed) {
-      //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
-
       res.render("success", { code: vnp_Params["vnp_ResponseCode"] });
     } else {
       res.render("success", { code: "97" });
