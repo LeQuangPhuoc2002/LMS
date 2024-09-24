@@ -21,18 +21,12 @@ app.use(methodOverride(function (req, res) {
     }
 }));
 
-// app.use(session({
-//     secret: process.env.SESSION_SECRET,
-//     resave: true,
-//     saveUninitialized: true,
-// }))
-
 app.get('/', (req, res, next) => {
     res.render('index');
 })
 
 require('./app/routes/route')(app);
 
-app.listen(3005, function() {
+app.listen(3000, function() {
     console.log('server running: http://localhost:3000');
 });
