@@ -34,65 +34,8 @@ Welcome to the **Learning Management System (LMS)**, a state-of-the-art platform
 
 ---
 
-## 💻 **Installation Guide**
-
-### **Prerequisites**
-
-- **Node.js** (Version 14.x or higher)
-- **NPM** or **Yarn**
-
-### **Setup Instructions**
-
-1. **Install Dependencies:**
-
-    ```bash
-    npm install
-    ```
-
-2. **Start the Application:**
-
-    ```bash
-    npm start
-    ```
-
-    Access the application at [http://localhost:3000](http://localhost:3000).
-
----
-
-## 📂 **Project Structure**
-
-- **`src/`**: Core application code
-  - **`controllers/`**: Manages route logic
-  - **`models/`**: Defines data models and database interactions
-  - **`routes/`**: Configures routing
-  - **`views/`**: User interface templates (if applicable)
-- **`config/`**: Application configuration files
-- **`public/`**: Static assets (CSS, JavaScript, images)
-- **`tests/`**: Test files and scripts
-
----
-
-## 🔧 **Configuration**
-
-Configuration settings are stored in `config/default.json`. Modify settings for database connections, application ports, and other parameters as needed.
-
----
-
-## 🤝 **Contributing**
-
-We welcome your contributions! Here’s how you can get involved:
-
-1. **Fork the Repository**
-2. **Create a New Branch:** (`git checkout -b feature/your-feature`)
-3. **Commit Your Changes:** (`git commit -am 'Add new feature'`)
-4. **Push the Branch:** (`git push origin feature/your-feature`)
-5. **Submit a Pull Request**
-
----
-
 ## 📞 **Contact Information**
 
 For support or inquiries, please contact:
 
-- **Name:** Lê Quang Phước
 - **Email:** [quangphuoctacoo@gmail.com](mailto:quangphuoctacoo@gmail.com)
