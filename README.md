@@ -4,12 +4,6 @@
 
 ---
 
-## **Overview**
-
-Welcome to the **Learning Management System (LMS)**, a state-of-the-art platform built using **Node.js** and **Express.js**. Designed for efficiency and ease of use, this LMS simplifies the management of online learning activities, enhancing the experience for instructors, learners, and administrators alike.
-
----
-
 ## **Features**
 
 ### **For Teachers**
