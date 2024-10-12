@@ -4,5 +4,5 @@ module.exports = {
     host    : 'localhost',
     user    : 'root',
     password: '',
-    database: 'yo'
+    database: 'LMS'
 }
