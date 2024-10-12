@@ -96,5 +96,3 @@ For support or inquiries, please contact:
 
 - **Name:** Lê Quang Phước
 - **Email:** [quangphuoctacoo@gmail.com](mailto:quangphuoctacoo@gmail.com)
-- **Phone:** 0987214100
-- **Skype:** [live:.cid.92e470ef3ae60d04](skype:live:.cid.92e470ef3ae60d04)
