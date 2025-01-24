@@ -26,4 +26,3 @@
 - **Manage Courses:** Administer and supervise all courses available on the platform.
 - **Manage Advertisements:** Control and optimize advertising and promotional efforts.
 
----
