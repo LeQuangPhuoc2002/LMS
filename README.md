@@ -27,7 +27,3 @@
 - **Manage Advertisements:** Control and optimize advertising and promotional efforts.
 
 ---
-
-## **Contact Information**
-
-- **Email:** [quangphuoctacoo@gmail.com](mailto:quangphuoctacoo@gmail.com)
